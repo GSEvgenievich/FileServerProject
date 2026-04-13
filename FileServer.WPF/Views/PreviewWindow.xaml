@@ -1,0 +1,85 @@
+﻿<Window x:Class="FileServer.WPF.Views.PreviewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converters="clr-namespace:FileServer.WPF.Converters"
+        Title="Просмотр изображения" Height="700" Width="900"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None" AllowsTransparency="True"
+        Background="Transparent">
+
+    <Window.Resources>
+        <converters:BytesToImageConverter x:Key="BytesToImageConverter"/>
+    </Window.Resources>
+
+    <Border Background="#1A1A1A" CornerRadius="12" Opacity="0.95">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок -->
+            <Border Grid.Row="0" Background="#2A2A2A" CornerRadius="12,12,0,0" 
+                    MouseLeftButtonDown="Window_MouseLeftButtonDown">
+                <Grid Height="40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="{Binding FileName}" 
+                               Foreground="White" FontSize="14" FontWeight="SemiBold"
+                               Margin="15,0,0,0" VerticalAlignment="Center"
+                               TextTrimming="CharacterEllipsis"/>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0,0,5,0">
+                        <Button Content="⬇" Click="DownloadButton_Click"
+                                Width="35" Height="35" Margin="0,0,5,0"
+                                Background="#4A4A4A" Foreground="White"
+                                BorderThickness="0" Cursor="Hand"
+                                ToolTip="Скачать">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="4"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+
+                        <Button Content="✕" Click="CloseButton_Click"
+                                Width="35" Height="35"
+                                Background="#E74C3C" Foreground="White"
+                                BorderThickness="0" Cursor="Hand"
+                                ToolTip="Закрыть">
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="4"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Изображение -->
+            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" 
+                          VerticalScrollBarVisibility="Auto"
+                          Background="#1A1A1A">
+                <Image Source="{Binding FullImageData, Converter={StaticResource BytesToImageConverter}}"
+                       Stretch="Uniform" Margin="20"/>
+            </ScrollViewer>
+
+            <!-- Информация -->
+            <Border Grid.Row="2" Background="#2A2A2A" CornerRadius="0,0,12,12" Padding="15,10">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding FormattedSize}" Foreground="#AAA" FontSize="12"/>
+                    <TextBlock Text=" • " Foreground="#666" FontSize="12"/>
+                    <TextBlock Text="{Binding ContentType}" Foreground="#AAA" FontSize="12"/>
+                    <TextBlock Text=" • " Foreground="#666" FontSize="12"/>
+                    <TextBlock Text="{Binding UploadedAt, StringFormat='dd.MM.yyyy HH:mm'}" 
+                               Foreground="#AAA" FontSize="12"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

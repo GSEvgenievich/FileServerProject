@@ -1,0 +1,52 @@
+# Visual Studio
+**/.vs/
+**/.vscode/
+*.user
+*.suo
+*.vsmdi
+*.vsp
+
+# Build результаты
+**/bin/
+**/obj/
+**/out/
+**/publish/
+
+# WPF приложение (не нужно в Docker образе)
+**/FileServer.WPF/
+
+# Git
+**/.git/
+**/.gitignore
+**/.gitattributes
+
+# Документация
+**/*.md
+**/*.txt
+!**/README.md
+
+# Логи
+**/logs/
+*.log
+
+# Тесты
+**/TestResults/
+**/*.Tests/
+
+# Временные файлы
+*.tmp
+*.swp
+*.bak
+*.cache
+
+# Docker файлы
+**/Dockerfile
+**/.dockerignore
+**/docker-compose*.yml
+
+# Изображения и медиа (не нужны для сборки)
+**/*.png
+**/*.jpg
+**/*.jpeg
+**/*.gif
+!**/wwwroot/**
